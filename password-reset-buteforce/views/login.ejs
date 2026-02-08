@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/style.css" />
+  <title>Sign In</title>
+</head>
+<body>
+  <div class="card">
+    <h1>Sign in</h1>
+    <% if (error) { %>
+      <div class="alert"><%= error %></div>
+    <% } %>
+    <form action="/login" method="POST">
+      <input type="email" name="email" placeholder="email" required />
+      <input type="password" name="password" placeholder="password" required />
+      <button type="submit">Sign in</button>
+    </form>
+    <nav>
+      <a class="link-inline" href="/reset">Forgot password?</a>
+      <a class="link-inline" href="/">Home</a>
+    </nav>
+  </div>
+</body>
+</html>

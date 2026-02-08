@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/style.css" />
+  <title>Account Center</title>
+</head>
+<body>
+  <div class="card">
+    <h1>Account Center</h1>
+    <p>Manage your accoun easily and securely.</p>
+    <nav>
+      <% if (user) { %>
+        <a href="/profile">Profile</a>
+        <form action="/logout" method="POST">
+          <button type="submit">Logout</button>
+        </form>
+      <% } else { %>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+      <% } %>
+    </nav>
+  </div>
+</body>
+</html>
