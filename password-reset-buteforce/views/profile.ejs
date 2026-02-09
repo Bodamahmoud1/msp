@@ -11,6 +11,26 @@
     <h1>Your account</h1>
     <p>Signed in as <strong><%= user.username %></strong></p>
     <% if (user.isAdmin) { %>
+      <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+      <script>
+        window.onload = () => {
+          confetti({
+            particleCount: 180,
+            spread: 90,
+            origin: { y: 0.6 }
+          });
+
+          // optional burst after delay
+          setTimeout(() => {
+            confetti({
+              particleCount: 120,
+              spread: 120,
+              origin: { y: 0.3 }
+            });
+          }, 400);
+        };
+      </script>
+
       <div class="alert">Flag: <strong><%= user.flag %></strong></div>
     <% } else { %>
       <div class="alert">No admin-only data available for this account.</div>
@@ -23,4 +43,5 @@
     </nav>
   </div>
 </body>
+<footer>2026 MSP Tech Club - Cybersecurity Red Team</footer>
 </html>
