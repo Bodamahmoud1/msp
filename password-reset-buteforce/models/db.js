@@ -5,7 +5,7 @@ function seedAdmin() {
   const adminPassword = `admin_${Math.random().toString(36).slice(2, 10)}`;
   users.push({
     id: nextId++,
-    email: "admin@mushroom.cat",
+    username: "admin",
     password: adminPassword,
     resetCode: null,
     isAdmin: true,
@@ -14,12 +14,12 @@ function seedAdmin() {
   return adminPassword;
 }
 
-function findUserByEmail(email) {
-  return users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+function findUserByUsername(username) {
+  return users.find((u) => u.username.toLowerCase() === username.toLowerCase());
 }
 
-function createUser(email, password) {
-  const user = { id: nextId++, email, password, resetCode: null, isAdmin: false, flag: null };
+function createUser(username, password) {
+  const user = { id: nextId++, username, password, resetCode: null, isAdmin: false, flag: null };
   users.push(user);
   return user;
 }
@@ -33,8 +33,8 @@ function updatePassword(user, newPassword) {
   user.resetCode = null;
 }
 
-function authenticate(email, password) {
-  const user = findUserByEmail(email);
+function authenticate(username, password) {
+  const user = findUserByUsername(username);
   if (!user) return null;
   return user.password === password ? user : null;
 }
@@ -42,7 +42,7 @@ function authenticate(email, password) {
 module.exports = {
   users,
   seedAdmin,
-  findUserByEmail,
+  findUserByUsername,
   createUser,
   setResetCode,
   updatePassword,

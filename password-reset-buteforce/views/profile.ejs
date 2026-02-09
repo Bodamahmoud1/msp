@@ -9,7 +9,7 @@
 <body>
   <div class="card">
     <h1>Your account</h1>
-    <p>Signed in as <strong><%= user.email %></strong></p>
+    <p>Signed in as <strong><%= user.username %></strong></p>
     <% if (user.isAdmin) { %>
       <div class="alert">Flag: <strong><%= user.flag %></strong></div>
     <% } else { %>

@@ -5,14 +5,14 @@ function getRegister(req, res) {
 }
 
 function postRegister(req, res) {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res.render("register", { error: "Email and password required." });
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.render("register", { error: "Username and password required." });
   }
-  if (db.findUserByEmail(email)) {
-    return res.render("register", { error: "Email already registered." });
+  if (db.findUserByUsername(username)) {
+    return res.render("register", { error: "Username already registered." });
   }
-  db.createUser(email.trim(), password);
+  db.createUser(username.trim(), password);
   res.redirect("/login");
 }
 
@@ -21,10 +21,15 @@ function getLogin(req, res) {
 }
 
 function postLogin(req, res) {
-  const { email, password } = req.body;
-  const user = db.authenticate(email || "", password || "");
+  const { username, password } = req.body;
+  const normalizedUsername = (username || "").trim();
+  const existingUser = db.findUserByUsername(normalizedUsername);
+  if (!existingUser) {
+    return res.render("login", { error: "Username not found." });
+  }
+  const user = db.authenticate(normalizedUsername, password || "");
   if (!user) {
-    return res.render("login", { error: "Invalid credentials." });
+    return res.render("login", { error: "Invalid password." });
   }
   req.session.userId = user.id;
   res.redirect("/profile");

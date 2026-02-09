@@ -16,7 +16,7 @@
       <div class="alert"><%= message %></div>
     <% } %>
     <form action="/reset/confirm" method="POST">
-      <input type="email" name="email" placeholder="Email address" required />
+      <input type="text" name="username" placeholder="Username" required />
       <input type="text" name="code" placeholder="Verification code" required />
       <input type="password" name="newPassword" placeholder="New password" required />
       <button type="submit">Update password</button>

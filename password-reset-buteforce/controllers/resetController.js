@@ -5,9 +5,9 @@ function getRequest(req, res) {
 }
 
 function postRequest(req, res) {
-  const { email } = req.body;
-  if (email) {
-    const user = db.findUserByEmail(email.trim());
+  const { username } = req.body;
+  if (username) {
+    const user = db.findUserByUsername(username.trim());
     if (user) {
       const code = String(Math.floor(Math.random() * 10000)).padStart(4, "0");
       db.setResetCode(user, code);
@@ -23,8 +23,8 @@ function getConfirm(req, res) {
 }
 
 function postConfirm(req, res) {
-  const { email, code, newPassword } = req.body;
-  const user = db.findUserByEmail((email || "").trim());
+  const { username, code, newPassword } = req.body;
+  const user = db.findUserByUsername((username || "").trim());
   if (!user || !code || !newPassword) {
     return res.render("reset_confirm", { error: "Invalid data.", message: null });
   }
