@@ -1,0 +1,39 @@
+[
+  {
+    "id": "u1",
+    "username": "alice",
+    "password": "alice123",
+    "displayName": "Alice",
+    "solved": [
+      "c1"
+    ]
+  },
+  {
+    "id": "u2",
+    "username": "bob",
+    "password": "$2a$10$fC4MHWYfaD/AUJEjnUIXKe1W1FdbnZBqwHdPbjO0RbxxoO6JNf83W",
+    "displayName": "Bob",
+    "solved": [
+      "c1",
+      "c2"
+    ]
+  },
+  {
+    "id": "u3",
+    "username": "charlie",
+    "password": "charlie123",
+    "displayName": "Charlie",
+    "solved": []
+  },
+  {
+    "id": "u4",
+    "username": "boda",
+    "password": "$2a$10$.AMVStCOyqE/rtMIcBedjOHetmj5QWgyky8tdy0SHicV3AwDlbUFC",
+    "displayName": "0xb0d4",
+    "solved": [
+      "c1",
+      "c2",
+      "c3"
+    ]
+  }
+]
