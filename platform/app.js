@@ -39,7 +39,7 @@ app.get("/logout", authController.logout);
 app.get("/challenges", requireAuth, challengeController.listChallenges);
 app.post("/submit-flag", requireAuth, challengeController.submitFlag);
 
-app.get("/scoreboard", scoreboardController.showScoreboard);
+app.get("/scoreboard", requireAuth, scoreboardController.showScoreboard);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
