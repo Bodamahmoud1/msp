@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CTF Login</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/login">Login</a>
+      <a href="/scoreboard">Scoreboard</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Player Login</h1>
+    <div class="panel">
+      <% if (error) { %>
+        <div class="status error"><%= error %></div>
+      <% } %>
+      <form method="post" action="/login">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" required />
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required />
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  </main>
+</body>
+</html>

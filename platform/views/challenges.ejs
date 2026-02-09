@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Challenges</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/challenges">Challenges</a>
+      <a href="/scoreboard">Scoreboard</a>
+      <a href="/logout">Logout</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Welcome, <%= user.displayName || user.username %></h1>
+
+    <% if (message) { %>
+      <div class="status"><%= message %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="status error"><%= error %></div>
+    <% } %>
+
+    <% challenges.forEach((challenge) => { %>
+      <div class="panel challenge">
+        <div>
+          <strong><%= challenge.title %></strong>
+          <% if (solvedSet.has(challenge.id)) { %>
+            <span class="solved"> - Solved</span>
+          <% } %>
+        </div>
+        <small>Session: <%= challenge.session %> | Points: <%= challenge.points %></small>
+        <div><%= challenge.description %></div>
+        <div>Link: <a href="<%= challenge.link %>" target="_blank" rel="noopener">Open</a></div>
+        <form method="post" action="/submit-flag">
+          <input type="hidden" name="challengeId" value="<%= challenge.id %>" />
+          <label for="flag-<%= challenge.id %>">Flag</label>
+          <input id="flag-<%= challenge.id %>" name="flag" type="text" placeholder="CTF{...}" required />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    <% }); %>
+  </main>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scoreboard</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/challenges">Challenges</a>
+      <a href="/scoreboard">Scoreboard</a>
+      <a href="/login">Login</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Scoreboard</h1>
+    <div class="panel">
+      <table class="scoreboard">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Solved</th>
+            <th>Total Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% scores.forEach((s) => { %>
+            <tr>
+              <td><%= s.displayName %></td>
+              <td><%= s.solvedCount %></td>
+              <td><%= s.total %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>
