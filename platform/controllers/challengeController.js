@@ -4,10 +4,15 @@ const { getAllChallenges, getChallengeById } = require("../models/challengeModel
 async function listChallenges(req, res) {
   const user = await getUserById(req.session.userId);
   if (!user) return res.redirect("/login");
+  
+  // Refresh user to get role if needed, though req.user might be available if using middleware globally
+  // using getUserById ensures we have fresh data
+  
+  // console.log("Debug: challengeController.listChallenges user:", user.username, "role:", user.role);
 
   const challenges = await getAllChallenges();
-  const availableChallenges = challenges.filter(c => !c.isEnded);
-  const endedChallenges = challenges.filter(c => c.isEnded);
+  const availableChallenges = challenges.filter(c => c.status === 'active');
+  const endedChallenges = challenges.filter(c => c.status === 'ended');
 
   const solvedSet = new Set(user.solved || []);
   const message = req.query.msg || "";
@@ -33,8 +38,8 @@ async function submitFlag(req, res) {
     return res.redirect("/challenges?error=Unknown%20challenge");
   }
 
-  if (challenge.isEnded) {
-    return res.redirect("/challenges?error=This%20challenge%20has%20ended%20and%20no%20longer%20accepts%20flags");
+  if (challenge.status !== 'active') {
+    return res.redirect("/challenges?error=This%20challenge%20is%20not%20active%20and%20cannot%20be%20submitted");
   }
 
   const alreadySolved = (user.solved || []).includes(challenge.id);

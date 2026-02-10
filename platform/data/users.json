@@ -6,7 +6,8 @@
     "displayName": "Alice",
     "solved": [
       "c1"
-    ]
+    ],
+    "role": "user"
   },
   {
     "id": "u2",
@@ -16,14 +17,16 @@
     "solved": [
       "c1",
       "c2"
-    ]
+    ],
+    "role": "user"
   },
   {
     "id": "u3",
     "username": "charlie",
     "password": "charlie123",
     "displayName": "Charlie",
-    "solved": []
+    "solved": [],
+    "role": "user"
   },
   {
     "id": "u4",
@@ -33,7 +36,9 @@
     "solved": [
       "c1",
       "c2",
-      "c3"
-    ]
+      "c3",
+      "c1770731875690"
+    ],
+    "role": "admin"
   }
 ]

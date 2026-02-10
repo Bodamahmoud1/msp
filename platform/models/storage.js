@@ -3,13 +3,14 @@ const fs = require("fs").promises;
 const cache = new Map();
 
 async function readJson(path) {
-  if (cache.has(path)) {
-    return cache.get(path);
-  }
+  // Disable cache for now to ensure fresh data
+  // if (cache.has(path)) {
+  //   return cache.get(path);
+  // }
   try {
     const raw = await fs.readFile(path, "utf8");
     const data = JSON.parse(raw);
-    cache.set(path, data);
+    // cache.set(path, data);
     return data;
   } catch (error) {
     if (error.code === 'ENOENT') return [];

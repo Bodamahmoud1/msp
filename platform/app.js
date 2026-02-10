@@ -8,6 +8,8 @@ const rateLimit = require("express-rate-limit");
 const authController = require("./controllers/authController");
 const challengeController = require("./controllers/challengeController");
 const scoreboardController = require("./controllers/scoreboardController");
+const adminController = require("./controllers/adminController");
+const { requireAuth, requireAdmin } = require("./middleware/authMiddleware");
 
 const app = express();
 
@@ -20,6 +22,12 @@ const limiter = rateLimit({
   max: 100 // limit each IP to 100 requests per windowMs
 });
 app.use(limiter);
+
+// DEBUG: Request Logger
+app.use((req, res, next) => {
+  console.log(`[REQUEST] ${req.method} ${req.url}`);
+  next();
+});
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -39,10 +47,9 @@ app.use(
 
 app.use(express.static(path.join(__dirname, "public")));
 
-function requireAuth(req, res, next) {
-  if (!req.session.userId) return res.redirect("/login");
-  return next();
-}
+app.use(express.static(path.join(__dirname, "public")));
+
+// Removed local requireAuth definition in favor of middleware import
 
 app.get("/", (req, res) => {
   if (req.session.userId) return res.redirect("/challenges");
@@ -67,9 +74,32 @@ const submitLimiter = rateLimit({
 });
 app.post("/submit-flag", requireAuth, submitLimiter, challengeController.submitFlag);
 
+// Admin Routes
+console.log("Debug: Registering Admin Routes...");
+console.log("Debug: adminController.showDashboard is:", typeof adminController.showDashboard);
+
+app.get("/admin-debug", (req, res) => {
+  res.send("Admin Debug Route Works! Server is updated.");
+});
+
+app.get("/admin", requireAuth, requireAdmin, adminController.showDashboard);
+app.get("/admin/challenges/new", requireAuth, requireAdmin, adminController.showNewChallenge);
+app.post("/admin/challenges/new", requireAuth, requireAdmin, adminController.createChallengeHandler);
+app.get("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.showEditChallenge);
+app.post("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.updateChallengeHandler);
+app.post("/admin/challenges/:id/delete", requireAuth, requireAdmin, adminController.deleteChallengeHandler);
+
 app.get("/scoreboard", scoreboardController.showScoreboard);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`CTF app running on http://localhost:${port}`);
+  
+  console.log("--- Registered Routes ---");
+  app._router.stack.forEach(function(r){
+    if (r.route && r.route.path){
+      console.log(r.route.path)
+    }
+  })
+  console.log("-------------------------");
 });

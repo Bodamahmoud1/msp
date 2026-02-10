@@ -1,4 +1,4 @@
-const { getAllUsers } = require("../models/userModel");
+const { getAllUsers, getUserById } = require("../models/userModel");
 const { getAllChallenges } = require("../models/challengeModel");
 
 async function showScoreboard(req, res) {
@@ -6,6 +6,11 @@ async function showScoreboard(req, res) {
     getAllUsers(),
     getAllChallenges()
   ]);
+
+  let user = null;
+  if (req.session.userId) {
+    user = await getUserById(req.session.userId);
+  }
 
   const pointsById = new Map(challenges.map((c) => [c.id, c.points]));
 
@@ -26,7 +31,7 @@ async function showScoreboard(req, res) {
     return a.displayName.localeCompare(b.displayName);
   });
 
-  res.render("scoreboard", { scores, currentUserId: req.session.userId });
+  res.render("scoreboard", { scores, user, currentUserId: req.session.userId });
 }
 
 module.exports = { showScoreboard };

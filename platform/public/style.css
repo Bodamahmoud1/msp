@@ -284,6 +284,22 @@ input:focus {
   animation-delay: 0.3s;
 }
 
+/* Scoreboard Rows */
+.scoreboard-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.2s;
+}
+
+.current-user-row {
+  background: rgba(0, 164, 239, 0.15);
+  border-left: 4px solid var(--msp-blue);
+}
+
+/* Top 3 Player Names */
+.text-top3 {
+  color: var(--msp-blue);
+}
+
 /* Ended Challenge Style */
 .ended-challenge {
   opacity: 0.5;
@@ -308,7 +324,65 @@ input:focus {
   text-decoration: underline;
 }
 
-.current-challenge-banner a:hover {
-  text-decoration: none;
+/* Utilities for Dynamic Styles */
+.border-solved {
+  border-top: 4px solid var(--msp-green);
+}
+
+.border-unsolved {
+  border-top: 4px solid var(--msp-blue);
+}
+
+.border-ended {
+  border-top: 4px solid var(--msp-grey);
+}
+
+.bg-points {
+  background: rgba(255, 185, 0, 0.2);
   color: var(--msp-yellow);
+}
+
+.bg-category {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.bg-ended-label {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+}
+
+.bg-captured {
+  background: rgba(127, 186, 0, 0.1);
+  color: var(--msp-green);
+}
+
+.bg-ended-msg {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+}
+
+.border-left-user {
+  border-left: 4px solid var(--msp-orange);
+}
+
+
+.border-left-transparent {
+  border-left: 4px solid transparent;
+}
+
+/* Scoreboard User Highlighting */
+.row-user {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.text-user-primary {
+  color: white;
+}
+
+.text-user-secondary {
+  color: var(--text-secondary);
+}
+
+.text-user-highlight {
+  color: var(--msp-blue);
 }

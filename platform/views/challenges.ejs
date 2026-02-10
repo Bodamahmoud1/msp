@@ -17,6 +17,9 @@
     <div class="nav-links">
       <a href="/challenges" class="nav-link active">Challenges</a>
       <a href="/scoreboard" class="nav-link">Scoreboard</a>
+      <% if (user.role === 'admin') { %>
+        <a href="/admin" class="nav-link" style="color: var(--msp-yellow)">Admin</a>
+      <% } %>
       <a href="/logout" class="nav-link" style="color: var(--msp-orange)">Logout</a>
     </div>
   </nav>
@@ -44,7 +47,7 @@
       <% availableChallenges.forEach((challenge, index) => { 
           const isSolved = solvedSet.has(challenge.id);
       %>
-        <div class="glass-card animate-fade-in" style="animation-delay: <%= (index * 0.1) + 0.2 %>s; border-top: 4px solid <%= isSolved ? 'var(--msp-green)' : 'var(--msp-blue)' %>;">
+        <div class="glass-card animate-fade-in <%= isSolved ? 'border-solved' : 'border-unsolved' %>" style="--anim-delay: <%= (index * 0.1) + 0.2 %>s; animation-delay: var(--anim-delay);">
           <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
             <h3 style="margin-bottom: 0;"><%= challenge.title %></h3>
             <span class="badge <%= isSolved ? 'badge-solved' : 'badge-unsolved' %>">
@@ -53,8 +56,8 @@
           </div>
           
           <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
-            <span class="badge" style="background: rgba(255,185,0,0.2); color: var(--msp-yellow)"><%= challenge.points %> PTS</span>
-            <span class="badge" style="background: rgba(255,255,255,0.1);"><%= challenge.category || 'Misc' %></span>
+            <span class="badge bg-points"><%= challenge.points %> PTS</span>
+            <span class="badge bg-category"><%= challenge.category || 'Misc' %></span>
           </div>
           
           <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
@@ -70,7 +73,7 @@
               </div>
             </form>
           <% } else { %>
-             <div style="padding: 0.8rem; background: rgba(127,186,0,0.1); border-radius: var(--radius); text-align: center; color: var(--msp-green); font-weight: 600;">
+             <div style="padding: 0.8rem; border-radius: var(--radius); text-align: center; font-weight: 600;" class="bg-captured">
                Flag Captured!
              </div>
           <% } %>
@@ -82,24 +85,23 @@
     <h2 style="margin-top: 4rem; color: var(--text-secondary);">Ended Challenges</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
       <% endedChallenges.forEach((challenge, index) => { 
-          const isSolved = solvedSet.has(challenge.id);
       %>
-        <div class="glass-card animate-fade-in ended-challenge" style="animation-delay: <%= (index * 0.1) + 0.2 %>s; border-top: 4px solid var(--msp-grey);">
+        <div class="glass-card animate-fade-in ended-challenge border-ended" style="--anim-delay: <%= (index * 0.1) + 0.2 %>s; animation-delay: var(--anim-delay);">
           <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
             <h3 style="margin-bottom: 0;"><%= challenge.title %></h3>
-            <span class="badge" style="background: rgba(255, 255, 255, 0.1); color: var(--text-secondary);">ENDED</span>
+            <span class="badge bg-ended-label">ENDED</span>
           </div>
           
           <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
-            <span class="badge" style="background: rgba(255,255,255,0.1); color: var(--text-secondary)"><%= challenge.points %> PTS</span>
-            <span class="badge" style="background: rgba(255,255,255,0.1);"><%= challenge.category || 'Misc' %></span>
+            <span class="badge bg-ended-label"><%= challenge.points %> PTS</span>
+            <span class="badge bg-category"><%= challenge.category || 'Misc' %></span>
           </div>
           
           <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
             <%= challenge.description %>
           </p>
           
-          <div style="padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: var(--radius); text-align: center; color: var(--text-secondary); font-weight: 600;">
+          <div style="padding: 0.8rem; border-radius: var(--radius); text-align: center; font-weight: 600;" class="bg-ended-msg">
             Challenge Ended
           </div>
         </div>
