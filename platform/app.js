@@ -1,6 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 const authController = require("./controllers/authController");
 const challengeController = require("./controllers/challengeController");
@@ -8,15 +11,29 @@ const scoreboardController = require("./controllers/scoreboardController");
 
 const app = express();
 
+// Security headers
+app.use(helmet());
+
+// Global rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
-    secret: "mushroom-loves-you-dont-change-this",
+    secret: process.env.SESSION_SECRET || "mushroom-loves-you-dont-change-this",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // reliable only if behind proxy handling https
+    }
   })
 );
 
@@ -32,14 +49,25 @@ app.get("/", (req, res) => {
   return res.redirect("/login");
 });
 
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100, // Relaxed for local dev
+  message: "Too many login attempts, please try again later"
+});
+
 app.get("/login", authController.showLogin);
-app.post("/login", authController.login);
+app.post("/login", loginLimiter, authController.login);
 app.get("/logout", authController.logout);
 
 app.get("/challenges", requireAuth, challengeController.listChallenges);
-app.post("/submit-flag", requireAuth, challengeController.submitFlag);
+const submitLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 20, // limit to 20 submissions per hour
+  message: "Too many submissions, please slow down"
+});
+app.post("/submit-flag", requireAuth, submitLimiter, challengeController.submitFlag);
 
-app.get("/scoreboard", requireAuth, scoreboardController.showScoreboard);
+app.get("/scoreboard", scoreboardController.showScoreboard);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

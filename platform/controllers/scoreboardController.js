@@ -26,7 +26,7 @@ async function showScoreboard(req, res) {
     return a.displayName.localeCompare(b.displayName);
   });
 
-  res.render("scoreboard", { scores });
+  res.render("scoreboard", { scores, currentUserId: req.session.userId });
 }
 
 module.exports = { showScoreboard };

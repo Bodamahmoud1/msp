@@ -6,7 +6,8 @@
     "points": 50,
     "link": "https://example.com/welcome",
     "flag": "CTF{hello_world}",
-    "session": "Lesson 1"
+    "session": "Lesson 1",
+    "isEnded": true
   },
   {
     "id": "c2",
@@ -15,7 +16,8 @@
     "points": 100,
     "link": "https://example.com/strings",
     "flag": "CTF{strings_are_fun}",
-    "session": "Lesson 1"
+    "session": "Lesson 1",
+    "isEnded": false
   },
   {
     "id": "c3",
@@ -24,6 +26,7 @@
     "points": 150,
     "link": "https://example.com/headers",
     "flag": "CTF{header_hunter}",
-    "session": "Lesson 2"
+    "session": "Lesson 2",
+    "isEnded": false
   }
 ]

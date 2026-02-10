@@ -1,48 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Challenges</title>
-  <link rel="stylesheet" href="/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSP CTF | Challenges</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/challenges">Challenges</a>
-      <a href="/scoreboard">Scoreboard</a>
-      <a href="/logout">Logout</a>
-    </nav>
-  </header>
-  <main>
-    <h1>Welcome, <%= user.displayName || user.username %></h1>
+
+  <!-- Navbar -->
+  <nav class="navbar animate-fade-in">
+    <div class="nav-brand">
+      <img src="/images/logo.png" alt="MSP Logo" class="nav-logo">
+      <span>MSP CTF</span>
+    </div>
+    <div class="nav-links">
+      <a href="/challenges" class="nav-link active">Challenges</a>
+      <a href="/scoreboard" class="nav-link">Scoreboard</a>
+      <a href="/logout" class="nav-link" style="color: var(--msp-orange)">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container animate-fade-in delay-1">
+    <header style="margin-bottom: 1rem; text-align: center;">
+      <h1>Challenges</h1>
+      <h3 style="color: var(--msp-orange); text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; margin-bottom: 0.5rem;">Cybersecurity Red Team</h3>
+      <p style="color: var(--text-secondary);">Solve puzzles, exploit vulnerabilities, and capture flags.</p>
+    </header>
 
     <% if (message) { %>
-      <div class="status"><%= message %></div>
+      <div class="alert alert-success"><%= message %></div>
     <% } %>
     <% if (error) { %>
-      <div class="status error"><%= error %></div>
+      <div class="alert alert-error"><%= error %></div>
     <% } %>
 
-    <% challenges.forEach((challenge) => { %>
-      <div class="panel challenge">
-        <div>
-          <strong><%= challenge.title %></strong>
-          <% if (solvedSet.has(challenge.id)) { %>
-            <span class="solved"> - Solved</span>
+    <div class="current-challenge-banner animate-fade-in delay-2">
+      <h3>Current Challenge: <a href="http://example">http://example</a></h3>
+    </div>
+
+    <h2 style="margin-top: 2rem;">Available Challenges</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+      <% availableChallenges.forEach((challenge, index) => { 
+          const isSolved = solvedSet.has(challenge.id);
+      %>
+        <div class="glass-card animate-fade-in" style="animation-delay: <%= (index * 0.1) + 0.2 %>s; border-top: 4px solid <%= isSolved ? 'var(--msp-green)' : 'var(--msp-blue)' %>;">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+            <h3 style="margin-bottom: 0;"><%= challenge.title %></h3>
+            <span class="badge <%= isSolved ? 'badge-solved' : 'badge-unsolved' %>">
+              <%= isSolved ? 'Solved' : 'Unsolved' %>
+            </span>
+          </div>
+          
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+            <span class="badge" style="background: rgba(255,185,0,0.2); color: var(--msp-yellow)"><%= challenge.points %> PTS</span>
+            <span class="badge" style="background: rgba(255,255,255,0.1);"><%= challenge.category || 'Misc' %></span>
+          </div>
+          
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+            <%= challenge.description %>
+          </p>
+          
+          <% if (!isSolved) { %>
+            <form action="/submit-flag" method="POST">
+              <input type="hidden" name="challengeId" value="<%= challenge.id %>">
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="text" name="flag" placeholder="MSP{flag_here}" required style="padding: 0.6rem;">
+                <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1rem;">Submit</button>
+              </div>
+            </form>
+          <% } else { %>
+             <div style="padding: 0.8rem; background: rgba(127,186,0,0.1); border-radius: var(--radius); text-align: center; color: var(--msp-green); font-weight: 600;">
+               Flag Captured!
+             </div>
           <% } %>
         </div>
-        <small>Session: <%= challenge.session %> | Points: <%= challenge.points %></small>
-        <div><%= challenge.description %></div>
-        <div>Link: <a href="<%= challenge.link %>" target="_blank" rel="noopener">Open</a></div>
-        <form method="post" action="/submit-flag">
-          <input type="hidden" name="challengeId" value="<%= challenge.id %>" />
-          <label for="flag-<%= challenge.id %>">Flag</label>
-          <input id="flag-<%= challenge.id %>" name="flag" type="text" placeholder="CTF{...}" required />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    <% }); %>
-  </main>
+      <% }); %>
+    </div>
+
+    <% if (endedChallenges.length > 0) { %>
+    <h2 style="margin-top: 4rem; color: var(--text-secondary);">Ended Challenges</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+      <% endedChallenges.forEach((challenge, index) => { 
+          const isSolved = solvedSet.has(challenge.id);
+      %>
+        <div class="glass-card animate-fade-in ended-challenge" style="animation-delay: <%= (index * 0.1) + 0.2 %>s; border-top: 4px solid var(--msp-grey);">
+          <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+            <h3 style="margin-bottom: 0;"><%= challenge.title %></h3>
+            <span class="badge" style="background: rgba(255, 255, 255, 0.1); color: var(--text-secondary);">ENDED</span>
+          </div>
+          
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+            <span class="badge" style="background: rgba(255,255,255,0.1); color: var(--text-secondary)"><%= challenge.points %> PTS</span>
+            <span class="badge" style="background: rgba(255,255,255,0.1);"><%= challenge.category || 'Misc' %></span>
+          </div>
+          
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.5;">
+            <%= challenge.description %>
+          </p>
+          
+          <div style="padding: 0.8rem; background: rgba(255,255,255,0.05); border-radius: var(--radius); text-align: center; color: var(--text-secondary); font-weight: 600;">
+            Challenge Ended
+          </div>
+        </div>
+      <% }); %>
+    </div>
+    <% } %>
+  </div>
+
+  <script src="/background.js"></script>
 </body>
 </html>
