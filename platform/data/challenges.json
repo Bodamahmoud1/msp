@@ -7,11 +7,11 @@
     "link": "https://example.com/welcome",
     "flag": "CTF{hello_world}",
     "session": "Lesson 1",
-    "status": "active",
+    "status": "draft",
     "category": "Web",
     "author": "admin",
     "createdAt": "2023-01-01T00:00:00Z",
-    "updatedAt": "2026-02-10T13:53:54.197Z"
+    "updatedAt": "2026-02-10T17:37:58.944Z"
   },
   {
     "id": "c2",
@@ -21,10 +21,11 @@
     "link": "https://example.com/strings",
     "flag": "CTF{strings_are_fun}",
     "session": "Lesson 1",
-    "status": "active",
+    "status": "ended",
     "category": "Forensics",
     "author": "admin",
-    "createdAt": "2023-01-02T00:00:00Z"
+    "createdAt": "2023-01-02T00:00:00Z",
+    "updatedAt": "2026-02-10T17:37:52.889Z"
   },
   {
     "id": "c3",
@@ -34,10 +35,11 @@
     "link": "https://example.com/headers",
     "flag": "CTF{header_hunter}",
     "session": "Lesson 2",
-    "status": "active",
+    "status": "ended",
     "category": "Web",
     "author": "admin",
-    "createdAt": "2023-01-03T00:00:00Z"
+    "createdAt": "2023-01-03T00:00:00Z",
+    "updatedAt": "2026-02-10T17:37:45.847Z"
   },
   {
     "id": "c1770731875690",
@@ -47,8 +49,22 @@
     "points": 20,
     "flag": "MSP{b0d4}",
     "link": "",
+    "status": "ended",
+    "author": "boda",
+    "createdAt": "2026-02-10T13:57:55.690Z",
+    "updatedAt": "2026-02-10T17:37:37.750Z"
+  },
+  {
+    "id": "c1770744706774",
+    "title": "Revenge",
+    "description": "think it easy?",
+    "category": "WEB",
+    "points": 150,
+    "flag": "MSP{IDOR_3XPERT}",
+    "link": "https://msp-ctf.wuaze.com",
     "status": "active",
     "author": "boda",
-    "createdAt": "2026-02-10T13:57:55.690Z"
+    "createdAt": "2026-02-10T17:31:46.774Z",
+    "updatedAt": "2026-02-10T17:37:22.457Z"
   }
 ]
