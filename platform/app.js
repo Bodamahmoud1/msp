@@ -40,8 +40,8 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // reliable only if behind proxy handling https
+    httpOnly: true,
+    secure: false
     }
   })
 );
