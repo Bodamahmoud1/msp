@@ -12,6 +12,7 @@ const adminController = require("./controllers/adminController");
 const { requireAuth, requireAdmin } = require("./middleware/authMiddleware");
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Security headers
 app.use(helmet());
