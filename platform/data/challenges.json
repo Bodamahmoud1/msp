@@ -3,10 +3,15 @@
     "id": "c1",
     "title": "Warmup: Hello CTF",
     "description": "Find the flag hidden in the welcome page source.",
-    "points": 50,
+    "points": 500,
     "link": "https://example.com/welcome",
     "flag": "CTF{hello_world}",
-    "session": "Lesson 1"
+    "session": "Lesson 1",
+    "status": "active",
+    "category": "Web",
+    "author": "admin",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2026-02-10T13:53:54.197Z"
   },
   {
     "id": "c2",
@@ -15,7 +20,11 @@
     "points": 100,
     "link": "https://example.com/strings",
     "flag": "CTF{strings_are_fun}",
-    "session": "Lesson 1"
+    "session": "Lesson 1",
+    "status": "active",
+    "category": "Forensics",
+    "author": "admin",
+    "createdAt": "2023-01-02T00:00:00Z"
   },
   {
     "id": "c3",
@@ -24,6 +33,22 @@
     "points": 150,
     "link": "https://example.com/headers",
     "flag": "CTF{header_hunter}",
-    "session": "Lesson 2"
+    "session": "Lesson 2",
+    "status": "active",
+    "category": "Web",
+    "author": "admin",
+    "createdAt": "2023-01-03T00:00:00Z"
+  },
+  {
+    "id": "c1770731875690",
+    "title": "test ",
+    "description": "debug",
+    "category": "Reverse",
+    "points": 20,
+    "flag": "MSP{b0d4}",
+    "link": "",
+    "status": "active",
+    "author": "boda",
+    "createdAt": "2026-02-10T13:57:55.690Z"
   }
 ]
