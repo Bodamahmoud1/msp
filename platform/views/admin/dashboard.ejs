@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSP CTF | Admin Dashboard</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+    }
+    .admin-table th, .admin-table td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .admin-table th {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--msp-blue);
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+    .status-active { background: rgba(127, 186, 0, 0.2); color: var(--msp-green); }
+    .status-draft { background: rgba(255, 185, 0, 0.2); color: var(--msp-yellow); }
+    .status-ended { background: rgba(255, 255, 255, 0.1); color: var(--text-secondary); }
+    .header-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar animate-fade-in">
+    <div class="nav-brand">
+      <img src="/images/logo.png" alt="MSP Logo" class="nav-logo">
+      <span>MSP CTF Admin</span>
+    </div>
+    <div class="nav-links">
+      <a href="/challenges" class="nav-link">Main Site</a>
+      <a href="/admin" class="nav-link active">Dashboard</a>
+      <a href="/logout" class="nav-link" style="color: var(--msp-orange)">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container animate-fade-in delay-1">
+    <div class="header-actions">
+      <div>
+        <h1>Admin Dashboard</h1>
+        <p style="color: var(--text-secondary);">Manage challenges and platform settings.</p>
+      </div>
+      <a href="/admin/challenges/new" class="btn btn-primary">+ New Challenge</a>
+    </div>
+
+    <% if (message) { %>
+      <div class="alert alert-success"><%= message %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <div class="glass-card">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Points</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% challenges.forEach(challenge => { %>
+            <tr>
+              <td>
+                <div style="font-weight: bold;"><%= challenge.title %></div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);"><%= challenge.id %></div>
+              </td>
+              <td><%= challenge.category %></td>
+              <td><%= challenge.points %></td>
+              <td>
+                <span class="status-badge status-<%= challenge.status %>"><%= challenge.status %></span>
+              </td>
+              <td>
+                <div style="display: flex; gap: 0.5rem;">
+                  <a href="/admin/challenges/<%= challenge.id %>/edit" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Edit</a>
+                  <form action="/admin/challenges/<%= challenge.id %>/delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                    <button type="submit" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: rgba(242, 80, 34, 0.1); color: var(--msp-orange); border-color: rgba(242, 80, 34, 0.3);">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script src="/background.js"></script>
+</body>
+</html>
