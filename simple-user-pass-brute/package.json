@@ -1,0 +1,12 @@
+{
+  "name": "simple-user-pass-brute",
+  "version": "1.0.0",
+  "description": "Minimal MVC login challenge",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

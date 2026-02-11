@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSP CTF | Account</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar animate-fade-in">
+    <div class="nav-brand">
+      <img src="/images/logo.png" alt="MSP Logo" class="nav-logo">
+      <span>MSP CTF</span>
+    </div>
+    <div class="nav-links">
+      <a href="/challenges" class="nav-link">Challenges</a>
+      <a href="/scoreboard" class="nav-link">Scoreboard</a>
+      <% if (user && user.role === 'admin') { %>
+        <a href="/admin" class="nav-link" style="color: var(--msp-yellow)">Admin</a>
+      <% } %>
+      <a href="/account" class="nav-link active">Account</a>
+      <a href="/logout" class="nav-link" style="color: var(--msp-orange)">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container animate-fade-in delay-1" style="max-width: 720px;">
+    <header style="margin-bottom: 2rem; text-align: center;">
+      <h1>Account Settings</h1>
+      <p style="color: var(--text-secondary);">Update your username or password.</p>
+    </header>
+
+    <% if (message) { %>
+      <div class="alert alert-success"><%= message %></div>
+    <% } %>
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <div class="glass-card">
+      <form action="/account" method="POST">
+        <div class="form-group">
+          <label for="displayName">Display Name (optional)</label>
+          <input type="text" id="displayName" name="displayName" placeholder="Enter a display name" value="<%= user.displayName || '' %>">
+        </div>
+
+        <div class="form-group">
+          <label for="currentPassword">Current Password</label>
+          <input type="password" id="currentPassword" name="currentPassword" placeholder="Enter current password" required>
+        </div>
+
+        <div class="form-group">
+          <label for="newPassword">New Password (optional)</label>
+          <input type="password" id="newPassword" name="newPassword" placeholder="Enter a new password">
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm New Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/background.js"></script>
+</body>
+</html>

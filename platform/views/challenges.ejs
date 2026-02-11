@@ -20,6 +20,7 @@
       <% if (user.role === 'admin') { %>
         <a href="/admin" class="nav-link" style="color: var(--msp-yellow)">Admin</a>
       <% } %>
+      <a href="/account" class="nav-link">Account</a>
       <a href="/logout" class="nav-link" style="color: var(--msp-orange)">Logout</a>
     </div>
   </nav>
@@ -37,6 +38,7 @@
     <% if (error) { %>
       <div class="alert alert-error"><%= error %></div>
     <% } %>
+
 
 
     <h2 style="margin-top: 2rem;">Available Challenges</h2>

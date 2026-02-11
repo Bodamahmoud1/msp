@@ -24,11 +24,6 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// DEBUG: Request Logger
-app.use((req, res, next) => {
-  console.log(`[REQUEST] ${req.method} ${req.url}`);
-  next();
-});
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -36,7 +31,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "mushroom-loves-you-dont-change-this",
+    secret: "mushroom-loves-you-dont-change-this",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -66,6 +61,8 @@ const loginLimiter = rateLimit({
 app.get("/login", authController.showLogin);
 app.post("/login", loginLimiter, authController.login);
 app.get("/logout", authController.logout);
+app.get("/account", requireAuth, authController.showAccount);
+app.post("/account", requireAuth, authController.updateAccount);
 
 app.get("/challenges", requireAuth, challengeController.listChallenges);
 const submitLimiter = rateLimit({
@@ -76,8 +73,6 @@ const submitLimiter = rateLimit({
 app.post("/submit-flag", requireAuth, submitLimiter, challengeController.submitFlag);
 
 // Admin Routes
-console.log("Debug: Registering Admin Routes...");
-console.log("Debug: adminController.showDashboard is:", typeof adminController.showDashboard);
 
 app.get("/admin-debug", (req, res) => {
   res.send("Admin Debug Route Works! Server is updated.");
@@ -89,19 +84,12 @@ app.post("/admin/challenges/new", requireAuth, requireAdmin, adminController.upl
 app.get("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.showEditChallenge);
 app.post("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.upload.single('file'), adminController.updateChallengeHandler);
 app.post("/admin/challenges/:id/delete", requireAuth, requireAdmin, adminController.deleteChallengeHandler);
+app.post("/admin/current-challenge", requireAuth, requireAdmin, adminController.updateCurrentChallengeHandler);
 
 app.get("/scoreboard", scoreboardController.showScoreboard);
 app.get("/api/scoreboard", scoreboardController.getScoreboardData);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`CTF app running on http://localhost:${port}`);
-  
-  console.log("--- Registered Routes ---");
-  app._router.stack.forEach(function(r){
-    if (r.route && r.route.path){
-      console.log(r.route.path)
-    }
-  })
-  console.log("-------------------------");
+  console.log(`Server running on port ${port}`);
 });

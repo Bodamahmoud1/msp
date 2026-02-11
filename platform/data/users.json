@@ -1,44 +1,146 @@
 [
   {
     "id": "u1",
-    "username": "alice",
-    "password": "alice123",
-    "displayName": "Alice",
-    "solved": [
-      "c1"
-    ],
+    "username": "karas_ebrahim_ghaly",
+    "password": "karas_ebrahim_ghaly",
+    "displayName": "KARAS EBRAHIM",
+    "solved": [],
     "role": "user"
   },
   {
     "id": "u2",
-    "username": "bob",
-    "password": "$2a$10$fC4MHWYfaD/AUJEjnUIXKe1W1FdbnZBqwHdPbjO0RbxxoO6JNf83W",
-    "displayName": "Bob",
-    "solved": [
-      "c1",
-      "c2"
-    ],
+    "username": "hassan_osama_hassan",
+    "password": "hassan_osama_hassan",
+    "displayName": "HASSAN OSAMA",
+    "solved": [],
     "role": "user"
   },
   {
     "id": "u3",
-    "username": "charlie",
-    "password": "charlie123",
-    "displayName": "Charlie",
+    "username": "salama_abd_elmonem_elshazly",
+    "password": "salama_abd_elmonem_elshazly",
+    "displayName": "SALAMA ABD",
     "solved": [],
     "role": "user"
   },
   {
     "id": "u4",
+    "username": "youssef_nasser_fayez",
+    "password": "youssef_nasser_fayez",
+    "displayName": "YOUSSEF NASSER",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u5",
+    "username": "nour_mohamed_abdelfatah",
+    "password": "nour_mohamed_abdelfatah",
+    "displayName": "NOUR MOHAMED",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u6",
+    "username": "yousif_yaser_ibrahim",
+    "password": "yousif_yaser_ibrahim",
+    "displayName": "YOUSIF YASER",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u7",
+    "username": "peter_nader_wahba_makram",
+    "password": "peter_nader_wahba_makram",
+    "displayName": "PETER NADER",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u8",
+    "username": "bishoy_abdelmassih_fouad",
+    "password": "bishoy_abdelmassih_fouad",
+    "displayName": "BISHOY ABDELMASSIH",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u9",
+    "username": "farhio_abdisamed_omar",
+    "password": "farhio_abdisamed_omar",
+    "displayName": "FARHIO ABDISAMED",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u10",
+    "username": "jana_ayman_ibrahim",
+    "password": "jana_ayman_ibrahim",
+    "displayName": "JANA AYMAN",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u11",
+    "username": "youssef_wael",
+    "password": "youssef_wael",
+    "displayName": "YOUSSEF WAEL",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u12",
+    "username": "youssef_shady_mohammed",
+    "password": "youssef_shady_mohammed",
+    "displayName": "YOUSSEF SHADY",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u13",
+    "username": "yossef_yasser_saber_wisa",
+    "password": "yossef_yasser_saber_wisa",
+    "displayName": "YOSSEF YASSER",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u14",
+    "username": "youssef_ahmed_abouelkassem",
+    "password": "youssef_ahmed_abouelkassem",
+    "displayName": "YOUSSEF AHMED",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u15",
+    "username": "malak_emad_mohamed",
+    "password": "malak_emad_mohamed",
+    "displayName": "MALAK EMAD",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u16",
+    "username": "mohraeel_khalaf",
+    "password": "mohraeel_khalaf",
+    "displayName": "MOHRAEEL KHALAF",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u17",
+    "username": "doha_yahia_omara",
+    "password": "doha_yahia_omara",
+    "displayName": "DOHA YAHIA",
+    "solved": [],
+    "role": "user"
+  },
+  {
+    "id": "u18",
     "username": "boda",
-    "password": "$2a$10$.AMVStCOyqE/rtMIcBedjOHetmj5QWgyky8tdy0SHicV3AwDlbUFC",
+    "password": "boda",
     "displayName": "0xb0d4",
-    "solved": [
-      "c1",
-      "c2",
-      "c3",
-      "c1770731875690"
-    ],
+    "solved": [],
     "role": "admin"
   }
 ]

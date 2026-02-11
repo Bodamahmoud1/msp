@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal</title>
+  <style>
+    :root {
+      --bg: #0c0f14;
+      --panel: #101621;
+      --ink: #e7f0ff;
+      --muted: #8da0b8;
+      --accent: #7ad7ff;
+      --warn: #ffb86b;
+      --bad: #ff6b6b;
+      --good: #7dffb2;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      background:
+        radial-gradient(800px 400px at 80% -10%, #1c2736, transparent),
+        radial-gradient(700px 500px at 10% 110%, #0f2030, transparent),
+        var(--bg);
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+    }
+    .card {
+      width: min(420px, 92vw);
+      background: linear-gradient(180deg, #121a28, #0f1520);
+      border: 1px solid #1f2a3a;
+      border-radius: 14px;
+      padding: 24px 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: -40% 30% auto -40%;
+      height: 200px;
+      background: linear-gradient(90deg, transparent, rgba(122,215,255,0.12), transparent);
+      transform: rotate(-6deg);
+      pointer-events: none;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      position: relative;
+    }
+    h1.glitch::before,
+    h1.glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0.6;
+      clip-path: inset(0 0 0 0);
+      animation: glitch 3s infinite;
+    }
+    h1.glitch::after { color: var(--accent); animation-delay: 0.4s; }
+    @keyframes glitch {
+      0%, 92%, 100% { clip-path: inset(0 0 0 0); transform: translate(0,0); }
+      94% { clip-path: inset(10% 0 70% 0); transform: translate(1px,-1px); }
+      96% { clip-path: inset(70% 0 10% 0); transform: translate(-1px,1px); }
+    }
+    p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    label { display: block; font-size: 12px; margin: 10px 0 6px; color: var(--muted); }
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #243247;
+      background: #0c111a;
+      color: var(--ink);
+      outline: none;
+    }
+    input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(122,215,255,0.15); }
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 14px;
+    }
+    button {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #2b3a52;
+      border-radius: 10px;
+      background: #121a28;
+      color: var(--ink);
+      cursor: pointer;
+      transition: transform 120ms ease, border-color 120ms ease;
+    }
+    button:hover { border-color: var(--accent); transform: translateY(-1px); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .status {
+      min-height: 20px;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+    .status.bad { color: var(--bad); }
+    .status.warn { color: var(--warn); }
+    .status.good { color: var(--good); }
+    .shake { animation: shake 180ms ease-in-out 2; }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      50% { transform: translateX(3px); }
+      75% { transform: translateX(-2px); }
+      100% { transform: translateX(0); }
+    }
+    .scan {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <h1 class="glitch" data-text="Portal">Portal</h1>
+    <p>Minimal access panel. Enumeration leaks are intentional.</p>
+
+    <form id="loginForm">
+      <label for="username">User</label>
+      <input id="username" name="username" autocomplete="off" placeholder="username" />
+
+      <label for="password">Pass</label>
+      <input id="password" name="password" type="password" autocomplete="off" placeholder="••••••" />
+
+      <div class="row">
+        <button type="submit" id="submitBtn">Enter</button>
+      </div>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const statusEl = document.getElementById("status");
+    const scanEl = document.getElementById("scan");
+    const card = document.getElementById("card");
+    const submitBtn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "";
+      statusEl.className = "status";
+      submitBtn.disabled = true;
+
+      card.classList.remove("shake");
+      void card.offsetWidth;
+
+      // Quirk: tiny random delay to feel laggy
+      await new Promise(r => setTimeout(r, 350 + Math.random() * 700));
+
+      const payload = {
+        username: form.username.value,
+        password: form.password.value
+      };
+
+      try {
+        const res = await fetch("/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (!data.ok) {
+          statusEl.textContent = data.message;
+          statusEl.classList.add(res.status === 401 ? "warn" : "bad");
+          card.classList.add("shake");
+          if (res.status === 404) form.password.value = "";
+          submitBtn.disabled = false;
+          return;
+        }
+
+        statusEl.textContent = data.flag;
+        statusEl.classList.add("good");
+        submitBtn.disabled = false;
+      } catch (err) {
+        statusEl.textContent = "connection dropped";
+        statusEl.classList.add("bad");
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 const { getUserById, updateUser } = require("../models/userModel");
 const { getAllChallenges, getChallengeById } = require("../models/challengeModel");
+const { getSettings } = require("../models/settingsModel");
 
 async function listChallenges(req, res) {
   const user = await getUserById(req.session.userId);
@@ -10,9 +11,13 @@ async function listChallenges(req, res) {
   
   // console.log("Debug: challengeController.listChallenges user:", user.username, "role:", user.role);
 
-  const challenges = await getAllChallenges();
+  const [challenges, settings] = await Promise.all([
+    getAllChallenges(),
+    getSettings()
+  ]);
   const availableChallenges = challenges.filter(c => c.status === 'active');
   const endedChallenges = challenges.filter(c => c.status === 'ended');
+  const currentChallenge = challenges.find(c => c.id === settings.currentChallengeId) || null;
 
   const solvedSet = new Set(user.solved || []);
   const message = req.query.msg || "";
@@ -22,6 +27,7 @@ async function listChallenges(req, res) {
     user,
     availableChallenges,
     endedChallenges,
+    currentChallenge,
     solvedSet,
     message,
     error

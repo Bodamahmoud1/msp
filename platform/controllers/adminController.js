@@ -9,6 +9,7 @@ const {
   updateChallenge, 
   deleteChallenge 
 } = require("../models/challengeModel");
+const { getSettings, setCurrentChallenge } = require("../models/settingsModel");
 
 // Configure Multer Storage
 const storage = multer.diskStorage({
@@ -51,12 +52,14 @@ const upload = multer({
 
 async function showDashboard(req, res) {
   const challenges = await getAllChallenges();
+  const settings = await getSettings();
   const message = req.query.msg || "";
   const error = req.query.error || "";
   
   res.render("admin/dashboard", {
     user: req.user,
     challenges,
+    currentChallengeId: settings.currentChallengeId || "",
     message,
     error
   });
@@ -149,12 +152,23 @@ async function deleteChallengeHandler(req, res) {
   res.redirect("/admin?msg=Challenge%20deleted");
 }
 
+async function updateCurrentChallengeHandler(req, res) {
+  const { currentChallengeId } = req.body;
+  const challenges = await getAllChallenges();
+  const exists = challenges.some((c) => c.id === currentChallengeId);
+  if (!exists) {
+    return res.redirect("/admin?error=Invalid%20current%20challenge");
+  }
+  await setCurrentChallenge(currentChallengeId);
+  return res.redirect("/admin?msg=Current%20challenge%20updated");
+}
+
 module.exports = {
   showDashboard,
   showNewChallenge,
   createChallengeHandler,
   showEditChallenge,
   updateChallengeHandler,
-  deleteChallengeHandler,
-  upload // Export upload middleware
+  upload, // Export upload middleware
+  updateCurrentChallengeHandler
 };

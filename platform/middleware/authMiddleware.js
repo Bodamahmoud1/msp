@@ -8,7 +8,6 @@ async function requireAuth(req, res, next) {
   // Refresh user data from DB to ensure role/status is current
   const user = await getUserById(req.session.userId);
   if (!user) {
-    console.log("Debug: User not found for ID:", req.session.userId);
     req.session.destroy();
     return res.redirect("/login");
   }
@@ -21,7 +20,6 @@ async function requireAuth(req, res, next) {
 function requireAdmin(req, res, next) {
   // console.log("Debug: app.requireAdmin check:", req.user ? req.user.username : "no-user", req.user ? req.user.role : "no-role");
   if (!req.user || req.user.role !== "admin") {
-    console.log("Debug: Access denied. Role is:", req.user ? req.user.role : "undefined");
     return res.status(403).send("Access Denied: You do not have permission to view this page.");
   }
   return next();
