@@ -84,6 +84,7 @@ app.post("/admin/challenges/new", requireAuth, requireAdmin, adminController.cre
 app.get("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.showEditChallenge);
 app.post("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.updateChallengeHandler);
 app.post("/admin/challenges/:id/delete", requireAuth, requireAdmin, adminController.deleteChallengeHandler);
+app.post("/admin/current-challenge", requireAuth, requireAdmin, adminController.updateCurrentChallengeHandler);
 
 app.get("/scoreboard", scoreboardController.showScoreboard);
 

@@ -39,9 +39,16 @@
       <div class="alert alert-error"><%= error %></div>
     <% } %>
 
-    <div class="current-challenge-banner animate-fade-in delay-2">
-      <h3>Current Challenge: <a href="https://msp-ctf.wuaze.com/">Revenge (idor)</a></h3>
-    </div>
+    <% if (currentChallenge) { %>
+      <div class="current-challenge-banner animate-fade-in delay-2">
+        <h3>Current Challenge: <%= currentChallenge.title %></h3>
+        <% if (currentChallenge.link) { %>
+          <div style="margin-top: 0.4rem;">
+            <a href="<%= currentChallenge.link %>" target="_blank" rel="noopener noreferrer">Open challenge link</a>
+          </div>
+        <% } %>
+      </div>
+    <% } %>
 
     <h2 style="margin-top: 2rem;">Available Challenges</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">

@@ -36,6 +36,16 @@
       align-items: center;
       margin-bottom: 2rem;
     }
+    .current-challenge-form {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 1rem 0 2rem;
+    }
+    .current-challenge-form select {
+      min-width: 260px;
+    }
   </style>
 </head>
 <body>
@@ -67,6 +77,21 @@
     <% if (error) { %>
       <div class="alert alert-error"><%= error %></div>
     <% } %>
+
+    <div class="glass-card" style="margin-bottom: 1.5rem;">
+      <form action="/admin/current-challenge" method="POST" class="current-challenge-form">
+        <label for="currentChallengeId" style="font-weight: 600;">Current Challenge</label>
+        <select id="currentChallengeId" name="currentChallengeId" required>
+          <option value="" disabled <%= !currentChallengeId ? 'selected' : '' %>>Select a challenge</option>
+          <% challenges.forEach(challenge => { %>
+            <option value="<%= challenge.id %>" <%= currentChallengeId === challenge.id ? 'selected' : '' %>>
+              <%= challenge.title %> (<%= challenge.status %>)
+            </option>
+          <% }); %>
+        </select>
+        <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1rem;">Set Current</button>
+      </form>
+    </div>
 
     <div class="glass-card">
       <table class="admin-table">
