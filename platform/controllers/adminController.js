@@ -169,6 +169,7 @@ module.exports = {
   createChallengeHandler,
   showEditChallenge,
   updateChallengeHandler,
+  deleteChallengeHandler,
   upload, // Export upload middleware
   updateCurrentChallengeHandler
 };
