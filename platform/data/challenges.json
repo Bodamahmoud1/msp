@@ -21,11 +21,12 @@
     "link": "https://example.com/strings",
     "flag": "CTF{strings_are_fun}",
     "session": "Lesson 1",
-    "status": "ended",
+    "status": "active",
     "category": "Forensics",
     "author": "admin",
     "createdAt": "2023-01-02T00:00:00Z",
-    "updatedAt": "2026-02-10T17:37:52.889Z"
+    "updatedAt": "2026-02-11T21:45:52.601Z",
+    "file": "/uploads/challenges/tesr-1770846352596-330900889.txt"
   },
   {
     "id": "c3",
@@ -35,11 +36,12 @@
     "link": "https://example.com/headers",
     "flag": "CTF{header_hunter}",
     "session": "Lesson 2",
-    "status": "ended",
+    "status": "active",
     "category": "Web",
     "author": "admin",
     "createdAt": "2023-01-03T00:00:00Z",
-    "updatedAt": "2026-02-10T17:37:45.847Z"
+    "updatedAt": "2026-02-11T21:52:42.874Z",
+    "file": "/uploads/challenges/download-1770846705724-457592985.jpg"
   },
   {
     "id": "c1770731875690",

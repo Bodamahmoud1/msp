@@ -51,7 +51,7 @@
                 const sId = String(score.id);
                 const isCurrent = (cId && sId === cId);
             %>
-            <tr class="scoreboard-row animate-fade-in <%= isCurrent ? 'current-user-row' : '' %>">
+            <tr class="scoreboard-row animate-fade-in <%= isCurrent ? 'current-user-row' : '' %>" data-id="<%= score.id %>">
               <td style="padding: 1.2rem;">
                 <% if (index === 0) { %> <span style="font-size: 1.5rem;">🥇</span> <% } 
                    else if (index === 1) { %> <span style="font-size: 1.5rem;">🥈</span> <% }
@@ -80,5 +80,110 @@
   </div>
 
   <script src="/background.js"></script>
+
+  <script>
+    // Scoreboard Live Update Logic
+    const tbody = document.querySelector('tbody');
+    let isUpdating = false;
+
+    // FLIP Animation Helper
+    async function updateScoreboard() {
+      if (isUpdating) return;
+      isUpdating = true;
+
+      try {
+        const response = await fetch('/api/scoreboard');
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+        
+        const newScores = data.scores;
+        const currentUserId = data.currentUserId;
+
+        // 1. First (Capture current positions)
+        const currentRows = Array.from(tbody.querySelectorAll('tr'));
+        const positions = new Map();
+        
+        currentRows.forEach(row => {
+          const id = row.getAttribute('data-id');
+          if (id) {
+            positions.set(id, row.getBoundingClientRect());
+          }
+        });
+
+        // 2. Last (Update DOM)
+        // We will rebuild the HTML for simplicity in this case, 
+        // ensuring we keep the same data-id attributes for tracking.
+        const newHtml = newScores.map((score, index) => {
+          const cId = currentUserId ? String(currentUserId) : null;
+          const sId = String(score.id);
+          const isCurrent = (cId && sId === cId);
+          
+          let rankHtml = '';
+          if (index === 0) rankHtml = '<span style="font-size: 1.5rem;">🥇</span>';
+          else if (index === 1) rankHtml = '<span style="font-size: 1.5rem;">🥈</span>';
+          else if (index === 2) rankHtml = '<span style="font-size: 1.5rem;">🥉</span>';
+          else rankHtml = `<span style="color: var(--text-secondary); margin-left: 0.5rem;">${index + 1}</span>`;
+
+          return `
+            <tr class="scoreboard-row animate-fade-in ${isCurrent ? 'current-user-row' : ''}" data-id="${score.id}">
+              <td style="padding: 1.2rem;">${rankHtml}</td>
+              <td style="padding: 1.2rem;">
+                <div class="${index < 3 ? 'text-top3' : ''}" style="font-weight: 600;">
+                  ${score.displayName}
+                  ${isCurrent ? '<span style="font-size: 0.7rem; color: var(--text-secondary); font-weight: 400; margin-left: 0.5rem;">(You)</span>' : ''}
+                </div>
+              </td>
+              <td style="padding: 1.2rem; text-align: center;">
+                <span class="badge" style="background: rgba(255,255,255,0.1);">${score.solvedCount}</span>
+              </td>
+              <td style="padding: 1.2rem; text-align: right; color: var(--msp-yellow); font-weight: 700; font-family: monospace; font-size: 1.1rem;">
+                ${score.total}
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        if (tbody.innerHTML.trim() !== newHtml.trim()) {
+            tbody.innerHTML = newHtml;
+
+            // 3. Invert (Calculate delta and apply transform)
+            const newRows = Array.from(tbody.querySelectorAll('tr'));
+            newRows.forEach(row => {
+            const id = row.getAttribute('data-id');
+            const oldRect = positions.get(id);
+            
+            if (oldRect) {
+                const newRect = row.getBoundingClientRect();
+                const deltaY = oldRect.top - newRect.top;
+
+                if (deltaY !== 0) {
+                // Apply transform
+                row.style.transform = `translateY(${deltaY}px)`;
+                row.style.transition = 'none'; // Disable transition for instant move
+                
+                // Force reflow
+                requestAnimationFrame(() => {
+                    // 4. Play (Remove transform to animate to new position)
+                    row.style.transition = 'transform 0.5s ease';
+                    row.style.transform = '';
+                });
+                }
+            } else {
+                // New item animation
+                row.style.animation = 'fadeIn 0.5s ease-out';
+            }
+            });
+        }
+
+      } catch (error) {
+        console.error('Failed to update scoreboard:', error);
+      } finally {
+        isUpdating = false;
+      }
+    }
+
+    // Poll every 5 seconds
+    setInterval(updateScoreboard, 5000);
+  </script>
 </body>
 </html>

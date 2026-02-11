@@ -85,12 +85,13 @@ app.get("/admin-debug", (req, res) => {
 
 app.get("/admin", requireAuth, requireAdmin, adminController.showDashboard);
 app.get("/admin/challenges/new", requireAuth, requireAdmin, adminController.showNewChallenge);
-app.post("/admin/challenges/new", requireAuth, requireAdmin, adminController.createChallengeHandler);
+app.post("/admin/challenges/new", requireAuth, requireAdmin, adminController.upload.single('file'), adminController.createChallengeHandler);
 app.get("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.showEditChallenge);
-app.post("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.updateChallengeHandler);
+app.post("/admin/challenges/:id/edit", requireAuth, requireAdmin, adminController.upload.single('file'), adminController.updateChallengeHandler);
 app.post("/admin/challenges/:id/delete", requireAuth, requireAdmin, adminController.deleteChallengeHandler);
 
 app.get("/scoreboard", scoreboardController.showScoreboard);
+app.get("/api/scoreboard", scoreboardController.getScoreboardData);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

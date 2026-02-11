@@ -34,4 +34,32 @@ async function showScoreboard(req, res) {
   res.render("scoreboard", { scores, user, currentUserId: req.session.userId });
 }
 
-module.exports = { showScoreboard };
+async function getScoreboardData(req, res) {
+  const [users, challenges] = await Promise.all([
+    getAllUsers(),
+    getAllChallenges()
+  ]);
+
+  const pointsById = new Map(challenges.map((c) => [c.id, c.points]));
+
+  const scores = users.map((u) => {
+    const solved = u.solved || [];
+    const total = solved.reduce((sum, id) => sum + (pointsById.get(id) || 0), 0);
+    return {
+      id: u.id,
+      username: u.username,
+      displayName: u.displayName || u.username,
+      solvedCount: solved.length,
+      total
+    };
+  });
+
+  scores.sort((a, b) => {
+    if (b.total !== a.total) return b.total - a.total;
+    return a.displayName.localeCompare(b.displayName);
+  });
+
+  res.json({ scores, currentUserId: req.session.userId });
+}
+
+module.exports = { showScoreboard, getScoreboardData };
