@@ -2,9 +2,12 @@
   {
     "id": "u1",
     "username": "karas_ebrahim_ghaly",
-    "password": "karas_ebrahim_ghaly",
+    "password": "badass23@K",
     "displayName": "KARAS EBRAHIM",
-    "solved": [],
+    "solved": [
+      "c1770744706774",
+      "c1770842519912"
+    ],
     "role": "user"
   },
   {
@@ -58,9 +61,12 @@
   {
     "id": "u8",
     "username": "bishoy_abdelmassih_fouad",
-    "password": "bishoy_abdelmassih_fouad",
+    "password": "bishoymsp2026",
     "displayName": "BISHOY ABDELMASSIH",
-    "solved": [],
+    "solved": [
+      "c1770744706774",
+      "c1770842519912"
+    ],
     "role": "user"
   },
   {
@@ -90,17 +96,23 @@
   {
     "id": "u12",
     "username": "youssef_shady_mohammed",
-    "password": "youssef_shady_mohammed",
+    "password": "youssef1332",
     "displayName": "YOUSSEF SHADY",
-    "solved": [],
+    "solved": [
+      "c1770744706774",
+      "c1770842519912"
+    ],
     "role": "user"
   },
   {
     "id": "u13",
     "username": "yossef_yasser_saber_wisa",
-    "password": "yossef_yasser_saber_wisa",
+    "password": "272200659841h",
     "displayName": "YOSSEF YASSER",
-    "solved": [],
+    "solved": [
+      "c1770744706774",
+      "c1770842519912"
+    ],
     "role": "user"
   },
   {
@@ -108,7 +120,10 @@
     "username": "youssef_ahmed_abouelkassem",
     "password": "youssef_ahmed_abouelkassem",
     "displayName": "YOUSSEF AHMED",
-    "solved": [],
+    "solved": [
+      "c1770744706774",
+      "c1770842519912"
+    ],
     "role": "user"
   },
   {

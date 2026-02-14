@@ -1,1 +1,43 @@
-[]
+[
+  {
+    "id": "c1770744706774",
+    "title": "Revenge",
+    "description": "think it easy?",
+    "category": "WEB",
+    "points": 150,
+    "flag": "MSP{lVl1_ID0R_SUCCESSEDED!}",
+    "link": "https://msp-ctf.wuaze.com",
+    "status": "active",
+    "author": "boda",
+    "createdAt": "2026-02-10T17:31:46.774Z",
+    "updatedAt": "2026-02-12T13:29:52.228Z"
+  },
+  {
+    "id": "c1770842450073",
+    "title": "Easy Login",
+    "description": "Pass list :123456 password 12345678 qwerty 123456789 12345 1234 111111 1234567 dragon 123123 baseball abc123 football monkey letmein shadow master 666666 qwertyuiop 123321 mustang 1234567890 michael 654321 superman 1qaz2wsx 7777777 121212 000000 qazwsx 123qwe killer trustno1 jordan jennifer zxcvbnm asdfgh hunter buster soccer harley batman andrew tigger sunshine iloveyou 2000 charlie robert thomas hockey ranger daniel starwars klaster 112233 george computer michelle jessica pepper 1111 zxcvbn 555555 11111111 131313 freedom 777777 pass maggie 159753 aaaaaa ginger princess joshua cheese amanda summer love ashley nicole chelsea biteme matthew access yankees 987654321 dallas austin thunder taylor matrix mobilemail mom monitor monitoring montana moon moscow",
+    "category": "Web",
+    "points": 150,
+    "flag": "MSP{r3s3t_c0d3_brut3f0rc3_w1n}",
+    "link": "http://msp.h4ck.run:3000/",
+    "status": "active",
+    "author": "boda",
+    "createdAt": "2026-02-11T20:40:50.073Z",
+    "updatedAt": "2026-02-12T15:30:23.909Z",
+    "file": "/uploads/challenges/pass-1770909246617-98412207.txt"
+  },
+  {
+    "id": "c1770842519912",
+    "title": "Bruteforcer 🔥🔥",
+    "description": "Users list : carlos root admin test guest info adm mysql user administrator oracle ftp pi puppet ansible ec2-user vagrant azureuser academico acceso access accounting accounts acid activestat ad adam adkit admin administracion administrador administrator administrators admins ads adserver adsl ae af affiliate affiliates afiliados ag agenda agent ai aix ajax ak akamai al alabama alaska albuquerque alerts alpha alterwind am amarillo americas an anaheim analyzer announce announcements antivirus ao ap apache apollo app app01 app1 apple application applications apps appserver aq ar archie arcsight argentina arizona arkansas arlington as as400 asia asterix at athena atlanta atlas att au auction austin auth auto autodiscover ",
+    "category": "Web",
+    "points": 150,
+    "flag": "MSP{m5p_brut3_f0rc3d}",
+    "link": "http://msp.h4ck.run:3001/",
+    "status": "active",
+    "author": "boda",
+    "createdAt": "2026-02-11T20:41:59.912Z",
+    "updatedAt": "2026-02-12T15:29:38.041Z",
+    "file": "/uploads/challenges/users-1770909160586-278458807.txt"
+  }
+]
